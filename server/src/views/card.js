@@ -8,7 +8,7 @@ const router = express.Router()
  */
 router.get('/:id', async (req, res) => {
   try {
-    const card = await card.findByPk(req.params.id)
+    const card = await Card.findByPk(req.params.id)
     if (!card) return res.sendStatus(404)
     res.send(card)
   } catch (err) {
@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
  */
 router.post('/', async (req, res) => {
   try {
-    const card = await card.create(req.body)
+    const card = await Card.create(req.body)
     res.status(201).send(card)
   } catch (err) {
     res.sendStatus(500)
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
  */
 router.put('/:id', async (req, res) => {
   try {
-    let card = await card.findByPk(req.params.id)
+    let card = await Card.findByPk(req.params.id)
     if (!card) return res.sendStatus(404)
     card = await card.update({ ...card, ...req.body })
     res.send(card)
@@ -63,7 +63,7 @@ router.put('/:id', async (req, res) => {
  */
 router.delete('/:id', async (req, res) => {
   try {
-    let card = await card.findByPk(req.params.id)
+    let card = await Card.findByPk(req.params.id)
     if (!card) return res.sendStatus(404)
     card = await card.destroy()
     res.send(card)
