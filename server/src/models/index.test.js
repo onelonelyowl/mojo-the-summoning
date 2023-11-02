@@ -1,5 +1,5 @@
 // User.hasOne(Deck)
-// Deck.belongsTo(User)
+// Deck.belongsTo(User) // test for only one user being able to be added to a deck, not sure how check for errors testing sequelize , check
 
 // Deck.hasMany(Card)
 // Card.belongsTo(Deck)
