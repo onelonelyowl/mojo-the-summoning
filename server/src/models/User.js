@@ -5,4 +5,4 @@ const User = db.define("User", {
     username: DataTypes.STRING
 })
 
-modules.export = {User}
+module.exports = {User}

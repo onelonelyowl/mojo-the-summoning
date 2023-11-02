@@ -6,4 +6,4 @@ const Deck = db.define("Deck", {
     xp: DataTypes.INTEGER
 })
 
-modules.export = {Deck}
+module.exports = {Deck}

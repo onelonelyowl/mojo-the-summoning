@@ -8,4 +8,4 @@ const Card = db.define("Card", {
     imgUrl: DataTypes.STRING
 })
 
-modules.export = {Card}
+module.exports = {Card}

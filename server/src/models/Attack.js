@@ -7,4 +7,4 @@ const Attack = db.define("Attack", {
     staminaCost: DataTypes.INTEGER
 })
 
-modules.export = {Attack}
+module.exports = {Attack}
