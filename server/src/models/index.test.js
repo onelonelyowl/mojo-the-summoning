@@ -82,7 +82,7 @@ describe('Association testing:', () => {
         const userWithDeck = await User.findAll({include: Deck})
         console.log("random string =========================================*********************")
         console.log(userWithDeck)
-        expect(userWithDeck).toBe(2)
+        expect(userWithDeck).toMatchObject([{"Deck": {"UserId": 1, "id": 1, "name": "zoo", "xp": 111}, "id": 1, "username": "shinji"}])
     });
 });
 // clear db after tests
