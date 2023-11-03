@@ -75,10 +75,15 @@ describe('Association testing:', () => {
         const specialCardAttacks = await specialCard.getAttacks()
         expect(specialCardAttacks.length).toBe(8)
     });
-    // it('testing eager loading of user with deck', async () => {
-    //     const deckWithUser = await Deck.findAll({include: User})
-    //     expect(deckWithUser).toBe(2)
-    // });
+    it('testing eager loading of user with deck', async () => {
+        const user = await User.findOne()
+        const deck = await Deck.findOne()
+        await user.setDeck(deck)
+        const userWithDeck = await User.findAll({include: Deck})
+        console.log("random string =========================================*********************")
+        console.log(userWithDeck)
+        expect(userWithDeck).toBe(2)
+    });
 });
 // clear db after tests
 // afterAll(async () => await db.sync({ force: true }))
