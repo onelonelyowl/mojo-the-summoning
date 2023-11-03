@@ -1,12 +1,3 @@
-// User.hasOne(Deck)
-// Deck.belongsTo(User) // test for only one user being able to be added to a deck, not sure how check for errors testing sequelize , check
-
-// Deck.hasMany(Card)
-// Card.belongsTo(Deck)
-
-// Card.hasMany(Attack)
-// Attack.belongsTo(Card)
-
 const { User, Attack, Card, Deck } = require('./index.js')
 const {db} = require('../db/config.js')
 const { Sequelize } = require('sequelize')
@@ -78,12 +69,29 @@ describe('Association testing:', () => {
     it('testing eager loading of user with deck', async () => {
         const user = await User.findOne()
         const deck = await Deck.findOne()
-        await user.setDeck(deck)
         const userWithDeck = await User.findAll({include: Deck})
-        console.log("random string =========================================*********************")
-        console.log(userWithDeck)
         expect(userWithDeck).toMatchObject([{"Deck": {"UserId": 1, "id": 1, "name": "zoo", "xp": 111}, "id": 1, "username": "shinji"}])
+    });
+    it('tests eager loading of deck with cards', async () => {
+        const deckCards = await Deck.findOne({include: Card})
+        expect(deckCards).toHaveProperty('Cards') // it has property Cards therefore it worked
+    });
+    it('test eager loading of cards with attacks', async () => {
+        const cardAttacks = await Card.findOne({include: Attack})
+        expect(cardAttacks).toHaveProperty('Attacks')
+    })
+    it('test eager loading of attacks with cards', async () => {
+        const attackCards = await Attack.findOne({include: Card})
+        expect(attackCards).toHaveProperty('Cards')
+    });
+    it('can only add one user to a deck', async () => {
+        const newUser = await User.create({username: "ikari"})
+        const firstDeck = await Deck.findOne()
+        await newUser.setDeck(firstDeck)
+        const firstDeckAgain = await Deck.findOne()
+        const deckUsers = await firstDeckAgain.getUser()
+        expect(typeof deckUsers).toBe("object")     
     });
 });
 // clear db after tests
-// afterAll(async () => await db.sync({ force: true }))
+afterAll(async () => await db.sync({ force: true }))
